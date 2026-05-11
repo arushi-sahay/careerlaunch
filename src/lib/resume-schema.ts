@@ -6,6 +6,8 @@ export const resumeSchema = z.object({
   phone: z.string().min(5, "Phone number is required"),
   linkedin: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   portfolio: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  includePhoto: z.boolean().default(false),
+  photo: z.string().optional(),
   education: z.array(z.object({
     id: z.string(),
     institution: z.string(),
@@ -53,6 +55,8 @@ export const defaultResumeData: ResumeData = {
   phone: "",
   linkedin: "",
   portfolio: "",
+  includePhoto: false,
+  photo: "",
   education: [],
   skills: [],
   projects: [],

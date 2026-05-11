@@ -153,6 +153,68 @@ export default function Builder() {
                         <FormMessage />
                       </FormItem>
                     )} />
+                    {/* PHOTO TOGGLE */}
+                    <FormField
+                      control={form.control}
+                      name="includePhoto"
+                      render={({ field }) => (
+                        <FormItem className="col-span-full">
+                          <div className="flex items-center gap-3 pt-2">
+                            <input
+                              type="checkbox"
+                              checked={field.value}
+                              onChange={(e) => field.onChange(e.target.checked)}
+                              className="w-4 h-4"
+                            />
+
+                            <FormLabel className="m-0 cursor-pointer">
+                              Include Profile Photo
+                            </FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* PHOTO UPLOAD */}
+                    {form.watch("includePhoto") && (
+                      <FormField
+                        control={form.control}
+                        name="photo"
+                        render={({ field }) => (
+                          <FormItem className="col-span-full">
+                            <FormLabel>Upload Photo</FormLabel>
+
+                            <FormControl>
+                              <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+
+                                  if (file) {
+                                    const reader = new FileReader();
+
+                                    reader.onloadend = () => {
+                                      field.onChange(reader.result);
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                  }
+                                }}
+                              />
+                            </FormControl>
+
+                            {field.value && (
+                              <img
+                                src={field.value}
+                                alt="Preview"
+                                className="w-24 h-24 rounded-full object-cover border mt-3"
+                              />
+                            )}
+                          </FormItem>
+                        )}
+                      />
+                    )}
                   </div>
                 </div>
 
