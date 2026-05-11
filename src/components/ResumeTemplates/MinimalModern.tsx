@@ -5,27 +5,59 @@ export function MinimalModern({ data }: { data: ResumeData }) {
     <div className="resume-paper bg-white w-full h-[1122px] max-w-[794px] mx-auto p-8 text-gray-900 font-sans shadow-sm overflow-hidden box-border leading-relaxed">
       {/* Header */}
       <header className="mb-6 border-b-2 border-gray-100 pb-4">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-2">{data.fullName || "Your Name"}</h1>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
-          {data.email && <span>{data.email}</span>}
-          {data.phone && (
-            <>
-              <span className="text-gray-300">•</span>
-              <span>{data.phone}</span>
-            </>
+        <div className="flex items-start justify-between gap-6">
+          
+          {/* Left Side */}
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-2">
+              {data.fullName || "Your Name"}
+            </h1>
+
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+              {data.email && <span>{data.email}</span>}
+
+              {data.phone && (
+                <>
+                  <span className="text-gray-300">•</span>
+                  <span>{data.phone}</span>
+                </>
+              )}
+
+              {data.linkedin && (
+                <>
+                  <span className="text-gray-300">•</span>
+                  <a
+                    href={data.linkedin}
+                    className="text-gray-700 hover:underline"
+                  >
+                    {data.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
+                  </a>
+                </>
+              )}
+
+              {data.portfolio && (
+                <>
+                  <span className="text-gray-300">•</span>
+                  <a
+                    href={data.portfolio}
+                    className="text-gray-700 hover:underline"
+                  >
+                    {data.portfolio.replace(/^https?:\/\/(www\.)?/, "")}
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Right Side Photo */}
+          {data.includePhoto && data.photo && (
+            <img
+              src={data.photo}
+              alt="Profile"
+              className="w-24 h-24 rounded-full object-cover border border-gray-200"
+            />
           )}
-          {data.linkedin && (
-            <>
-              <span className="text-gray-300">•</span>
-              <a href={data.linkedin} className="text-gray-700 hover:underline">{data.linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>
-            </>
-          )}
-          {data.portfolio && (
-            <>
-              <span className="text-gray-300">•</span>
-              <a href={data.portfolio} className="text-gray-700 hover:underline">{data.portfolio.replace(/^https?:\/\/(www\.)?/, '')}</a>
-            </>
-          )}
+          
         </div>
       </header>
 
