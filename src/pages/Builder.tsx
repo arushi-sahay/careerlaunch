@@ -15,6 +15,7 @@ import { ProfessionalCorporate } from "@/components/ResumeTemplates/Professional
 import { StudentFresher } from "@/components/ResumeTemplates/StudentFresher";
 import { ArrowLeft, FileDown, LayoutTemplate, Lightbulb, Trash2, Wand2, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { generateResumeInsights } from "@/lib/resume-insights";
 
 export default function Builder() {
   const { profession: professionId } = useParams();
@@ -22,6 +23,7 @@ export default function Builder() {
   const { theme, setTheme } = useTheme();
 
   const { form, formData, score, loadSampleData, setValue } = useResumeForm(professionId || "software-engineering");
+  const insights = generateResumeInsights(formData);
   const [activeTemplate, setActiveTemplate] = useState<"minimal" | "corporate" | "fresher">("minimal");
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -400,7 +402,34 @@ export default function Builder() {
             />
           </div>
 
-          {/* Resume Rendering Area */}
+          <div className="bg-card p-5 rounded-xl border border-border shadow-sm mb-4">
+            <h2 className="text-lg font-semibold mb-4">
+              Resume Insights
+            </h2>
+
+            <div className="space-y-3">
+              {insights.map((insight, index) => (
+                <div
+                  key={index}
+                  className={`flex items-start gap-2 text-sm ${
+                    insight.type === "success"
+                      ? "text-green-600"
+                      : "text-yellow-600"
+                  }`}
+                >
+                  <span>
+                    {insight.type === "success"
+                      ? "✓"
+                      : "⚠"}
+                  </span>
+
+                  <span>{insight.message}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+                    {/* Resume Rendering Area */}
           <div className="flex-1 overflow-y-auto p-4 md:p-8 pt-20 pb-20 custom-scrollbar flex justify-center items-start print:p-0 print:overflow-visible print:block print:m-0">
             <div className="origin-top w-full max-w-[794px] print:transform-none print:w-full print:max-w-none transition-all">
               <div className="print-only hidden"></div>
